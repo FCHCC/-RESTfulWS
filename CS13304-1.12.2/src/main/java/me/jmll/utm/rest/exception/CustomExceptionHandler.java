@@ -28,6 +28,15 @@ public class CustomExceptionHandler {
 	 * MethodNotAllowedException
 	 */
 	// Escribe tu código aquí {
-
+	@ExceptionHandler(MethodNotAllowedException.class)
+	@ResponseBody
+	@ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+	public Errors handleNotAllowed(HttpServletRequest req, HttpServletResponse res, MethodNotAllowedException e) {
+		
+		Errors errors = new Errors();
+		errors.addError(new ErrorInfo(req.getRequestURL().toString(),HttpStatus.METHOD_NOT_ALLOWED.toString(),e));
+		
+		return errors;
+	}
 	// }
 }
