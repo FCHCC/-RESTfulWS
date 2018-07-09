@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="INFO">
+	<appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+		</Console>
+		<RollingFile name="LogFile" fileName="/tmp/cs13304.log"
+			immediateFlush="true" append="true" filePattern="/tmp/cs13304-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout>
+				<pattern>%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} -
+					%msg%n</pattern>
+			</PatternLayout>
+			<Policies>
+				<SizeBasedTriggeringPolicy size="10 MB" />
+			</Policies>
+			<DefaultRolloverStrategy min="1" max="4" />
+		</RollingFile>
+	</appenders>
+	<loggers>
+		<!-- Root Logger -->
+		<root level="debug">
+			<appender-ref ref="Console" />
+			<appender-ref ref="LogFile"/>
+		</root>
+		
+		<!-- Application Loggers -->
+		<logger name="me.jmll.utm" level="debug"/>
+
+		<!-- 3rdparty Loggers -->
+		<logger name="org.springframework.core" level="info"/>
+		<logger name="org.springframework.beans" level="info"/>
+		<logger name="org.springframework.context" level="info"/>
+		<logger name="org.springframework.web" level="info"/>
+		<logger name="org.apache" level="info"/>
+
+	</loggers>
+	
+</configuration>
