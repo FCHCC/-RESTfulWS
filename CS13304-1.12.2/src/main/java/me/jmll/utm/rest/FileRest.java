@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.View;
 
 import me.jmll.utm.model.OptionsDoc;
@@ -46,9 +47,9 @@ public class FileRest {
 		return new ResponseEntity<>(options,headers,HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "file", params=("path"), method= RequestMethod.GET)
+	@RequestMapping(value = "file", params= {"path"}, method= RequestMethod.GET)
 	@ResponseBody
-	public View downloadFile(@RequestParam(value = "path")String path)throws IOException {
+	public View downloadFile(@RequestParam(value="path")String path)throws IOException {
 		
 		if(!Files.exists(Paths.get(path))) 
 			
@@ -59,4 +60,20 @@ public class FileRest {
 			return new DownloadView(file.getFileName().toString(), Files.probeContentType(file),Files.readAllBytes(file));
 
 	}
+	
+	@RequestMapping(value = "file", params= {"path"},method = RequestMethod.DELETE)
+	@ResponseBody
+	@ResponseStatus(HttpStatus.ACCEPTED)
+	public String deleteFile(@RequestParam(value="path")String path) {
+		
+		if(!Files.exists(Paths.get(path)))
+			
+			throw new ResourceNotFoundException(path+"does not exist");
+		
+		return fileService.delete(path);
+				
+	}
+	
+	
+	
 }

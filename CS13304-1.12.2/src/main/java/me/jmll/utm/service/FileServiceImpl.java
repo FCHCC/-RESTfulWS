@@ -76,5 +76,12 @@ public class FileServiceImpl implements FileService {
         }
 		return false;
 	}
+	
+	//Borra path de archivo 
+	@Override
+	public String delete(String path) {
+		
+		return path;
+	}
 
 }
