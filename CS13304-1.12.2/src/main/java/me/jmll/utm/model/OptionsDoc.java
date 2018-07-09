@@ -1,6 +1,6 @@
 package me.jmll.utm.model;
 
-import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -11,9 +11,9 @@ import org.springframework.http.HttpMethod;
 @XmlRootElement
 public class OptionsDoc {
 
-	private Map<HttpMethod, String> methods = new HashMap<>() ;
+	private Map<HttpMethod, String> methods = new Hashtable<>() ;
 	
-	@XmlElement(name = "method")
+	@XmlElement(name = "methods")
 	public Map<HttpMethod,String> getMethods(){
 		return methods;
 	}
