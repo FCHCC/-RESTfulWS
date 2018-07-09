@@ -1,5 +1,9 @@
 package me.jmll.utm.rest;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -11,9 +15,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.View;
 
 import me.jmll.utm.model.OptionsDoc;
+import me.jmll.utm.rest.exception.ResourceNotFoundException;
 import me.jmll.utm.service.FileService;
+import me.jmll.utm.view.DownloadView;
 
 @Controller
 public class FileRest {
@@ -37,5 +46,17 @@ public class FileRest {
 		return new ResponseEntity<>(options,headers,HttpStatus.OK);
 	}
 	
-	public View downloadFile() {}
+	@RequestMapping(value = "file", params=("path"), method= RequestMethod.GET)
+	@ResponseBody
+	public View downloadFile(@RequestParam(value = "path")String path)throws IOException {
+		
+		if(!Files.exists(Paths.get(path))) 
+			
+			throw new ResourceNotFoundException(path +"does not exist.");
+			
+			Path file = fileService.getFile(path);
+			
+			return new DownloadView(file.getFileName().toString(), Files.probeContentType(file),Files.readAllBytes(file));
+
+	}
 }
