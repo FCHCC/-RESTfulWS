@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.View;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import me.jmll.utm.model.OptionsDoc;
 import me.jmll.utm.rest.exception.ResourceNotFoundException;
@@ -74,6 +76,25 @@ public class FileRest {
 				
 	}
 	
+	@RequestMapping(value="file", method=RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<?> uploadFile(@RequestParam(value="file")MultipartFile file,@RequestParam(value="name") String name,@RequestParam(value="dir")String dir){
+		
+		if(file.isEmpty()) {
+			
+			return new ResponseEntity<>(null,null,HttpStatus.BAD_REQUEST);
+		}
+		else {
+			
+			fileService.uploadFile(file, name, dir);
+			
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("Location", ServletUriComponentsBuilder.fromCurrentServletMapping().path("file/?path="+dir+"/"+name).build().toString());
+		
+			return new ResponseEntity<>(null,headers,HttpStatus.CREATED);
+		}
+	}
 	
 	
+
 }
