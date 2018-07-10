@@ -15,7 +15,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,7 +26,6 @@ import me.jmll.utm.model.File;
 import me.jmll.utm.model.FileLinkListResource;
 import me.jmll.utm.model.Link;
 import me.jmll.utm.model.OptionsDoc;
-import me.jmll.utm.model.UserLinkListResource;
 import me.jmll.utm.rest.exception.ResourceNotFoundException;
 import me.jmll.utm.service.FileService;
 
@@ -61,8 +59,6 @@ public class DirectoryRest {
 		if(!Files.exists(path)) {
 			throw new ResourceNotFoundException(path +"does not exist.");
 		}
-		
-		ServletUriComponentsBuilder builder = ServletUriComponentsBuilder.fromCurrentServletMapping();
 		
 		List<Path> paths = new ArrayList<Path>();
 		
@@ -109,8 +105,6 @@ public class DirectoryRest {
 			throw new ResourceNotFoundException(path +"does not exist.");
 		}
 	
-		ServletUriComponentsBuilder builder = ServletUriComponentsBuilder.fromCurrentServletMapping();
-		
 		List<Path> paths = new ArrayList<Path>();
 		
 		List<File> files = new ArrayList<File>();
@@ -124,13 +118,9 @@ public class DirectoryRest {
 					new Link(ServletUriComponentsBuilder.fromCurrentServletMapping()
 							.path("/file/?path="+file.toAbsolutePath()).build().toString().replaceAll("\\\\", "/"),
 							"download")));		
-		});
-		
-		FileLinkListResource filesLinksResource = new FileLinkListResource();
-		filesLinksResource.addLink(new Link(builder.path("/").build().toString(),"api"));
-		filesLinksResource.addLink(new Link(builder.path("/directory/").build().toString(),"self"));
-		
+		});		
 
+		FileLinkListResource filesLinksResource = new FileLinkListResource();
 		List<Link> _links = new ArrayList<Link>();
 		
 		_links.add(new Link(ServletUriComponentsBuilder
