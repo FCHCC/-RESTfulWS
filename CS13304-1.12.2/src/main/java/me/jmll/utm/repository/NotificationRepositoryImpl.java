@@ -28,10 +28,27 @@ public class NotificationRepositoryImpl implements NotificationRepository {
 	}
 	
 	@Override
-	public Notification createNotification(String id, String message, String subject,List<String> toAddress, List<String>ccAddress) {
+	public Notification createNotification(String message, String subject,List<String> toAddress, List<String>ccAddress) {
+		
+		Notification notification = new Notification (subject, message,toAddress, ccAddress);
+		
+		notificationDB.put(notification.getMessageId(), notification);
+		
+		return notification;
 		
 	}
 	
+	@Override
+	public Notification updateNotification(String id, Notification notification) {
+		notificationDB.put(id, notification);
+		
+		return notification;
+	}
 	
+	@Override
+	public void addNotification(Notification notification) {
+		
+		notificationDB.put(notification.getMessageId(),notification);
+	}
 	
 }

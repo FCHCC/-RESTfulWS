@@ -10,8 +10,11 @@ public interface NotificationRepository {
 
 	Notification getNotification(String id);
 
-	Notification createNotification(String id, String message, String subject, List<String> toAddress,
-			List<String> ccAddress);
+	Notification createNotification(String message, String subject, List<String> toAddress, List<String> ccAddress);
+
+	Notification updateNotification(String id, Notification notification);
+
+	void addNotification(Notification notification);
 
 	
 }
