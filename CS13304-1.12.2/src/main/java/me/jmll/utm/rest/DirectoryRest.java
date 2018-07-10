@@ -24,8 +24,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import me.jmll.utm.model.File;
+import me.jmll.utm.model.FileLinkListResource;
 import me.jmll.utm.model.Link;
 import me.jmll.utm.model.OptionsDoc;
+import me.jmll.utm.model.UserLinkListResource;
 import me.jmll.utm.rest.exception.ResourceNotFoundException;
 import me.jmll.utm.service.FileService;
 
@@ -50,7 +52,7 @@ public class DirectoryRest {
 		return new ResponseEntity<>(options,headers,HttpStatus.OK);
 	}
 	
-	@RequestMapping(value ="dir", method=RequestMethod.GET,produces = { "application/json", "text/json" })
+	@RequestMapping(value ="directory",params= "dir", method=RequestMethod.GET,produces = { "application/json", "text/json" })
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
 	public Map<String,Object> getFilesJSON(@RequestParam(value="dir") String dir){
@@ -88,6 +90,26 @@ public class DirectoryRest {
 		response.put("data", files);
 
 		return response;
+	}
+	
+	@RequestMapping(value = "directory", 
+			params= "dir",
+			method = RequestMethod.GET,
+			produces = { "application/xml", "text/xml" })
+	@ResponseBody
+	@ResponseStatus(HttpStatus.OK)
+	public FileLinkListResource getFilesXML(@RequestParam(value="dir") String dir) {
+		// Escribe tu código aquí {
+		ServletUriComponentsBuilder builder = ServletUriComponentsBuilder.fromCurrentServletMapping();
+		UserLinkListResource userLinksResource = new UserLinkListResource();
+		userLinksResource.addLink(new Link(builder.path("/").build().toString(),"api"));
+		userLinksResource.addLink(new Link(builder.path("/user/").build().toString(),"self"));
+		
+		userService.getUsers().forEach(user-> {
+			userLinksResource.addUserLink(new Link(ServletUriComponentsBuilder.fromCurrentServletMapping().path("/"+user.getUsername()).build().toString(),user.getUsername().toString()));;
+		});
+		// }
+		return ;
 	}
 	
 	
