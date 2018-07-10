@@ -30,7 +30,7 @@ public class FileLinkListResource extends Resource {
 		return fileLinks;
 	}
 	
-	public void setFileLinks(List<File> fileLinks) {
+	public void setFiles(List<File> fileLinks) {
 		this.fileLinks = fileLinks;
 	}
 	

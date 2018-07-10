@@ -80,16 +80,20 @@ public class DirectoryRest {
 							"download")));		
 		});
 		
-		List<Link> links = new ArrayList<Link>();
-
-		links.add(new Link(builder.path("/").build().toString(), "api"));
-		links.add(new Link(builder.path("/directory/").build().toString(), "self"));
+		List<Link> _links = new ArrayList<Link>();
 		
-		Map<String, Object> response = new Hashtable<>(2);
-		response.put("_links", links);
-		response.put("data", files);
-
-		return response;
+		 _links.add(new Link(ServletUriComponentsBuilder
+				 .fromCurrentServletMapping().path("/")
+				 .build().toString(), "api"));
+				 _links.add(new Link(ServletUriComponentsBuilder
+				 .fromCurrentServletMapping().path("/directory")
+				 .build().toString(), "self"));
+				 
+				 Map<String, Object> response = new Hashtable<>(2);
+				 response.put("_links", _links);
+				 response.put("data", files);
+				 
+				 return response;
 	}
 	
 	@RequestMapping(value = "directory", 
@@ -99,17 +103,49 @@ public class DirectoryRest {
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
 	public FileLinkListResource getFilesXML(@RequestParam(value="dir") String dir) {
-		// Escribe tu código aquí {
+				
+		Path path = Paths.get(dir);
+		if(!Files.exists(path)) {
+			throw new ResourceNotFoundException(path +"does not exist.");
+		}
+	
 		ServletUriComponentsBuilder builder = ServletUriComponentsBuilder.fromCurrentServletMapping();
-		UserLinkListResource userLinksResource = new UserLinkListResource();
-		userLinksResource.addLink(new Link(builder.path("/").build().toString(),"api"));
-		userLinksResource.addLink(new Link(builder.path("/user/").build().toString(),"self"));
 		
-		userService.getUsers().forEach(user-> {
-			userLinksResource.addUserLink(new Link(ServletUriComponentsBuilder.fromCurrentServletMapping().path("/"+user.getUsername()).build().toString(),user.getUsername().toString()));;
+		List<Path> paths = new ArrayList<Path>();
+		
+		List<File> files = new ArrayList<File>();
+
+		paths.forEach(file ->{
+			
+			files.add(new File(file.getFileName().toString(),
+					path.toAbsolutePath().toString().replaceAll("\\\\", "/"),
+					file.toAbsolutePath().toString().replaceAll("\\\\", "/"),
+					file.toFile().length(),
+					new Link(ServletUriComponentsBuilder.fromCurrentServletMapping()
+							.path("/file/?path="+file.toAbsolutePath()).build().toString().replaceAll("\\\\", "/"),
+							"download")));		
 		});
-		// }
-		return ;
+		
+		FileLinkListResource filesLinksResource = new FileLinkListResource();
+		filesLinksResource.addLink(new Link(builder.path("/").build().toString(),"api"));
+		filesLinksResource.addLink(new Link(builder.path("/directory/").build().toString(),"self"));
+		
+
+		List<Link> _links = new ArrayList<Link>();
+		
+		_links.add(new Link(ServletUriComponentsBuilder
+		 .fromCurrentServletMapping().path("/")
+		 .build().toString(), "api"));
+		
+		_links.add(new Link(ServletUriComponentsBuilder
+		 .fromCurrentServletMapping().path("/directory")
+		.build().toString(), "self"));
+		
+		filesLinksResource.setLinks(_links);
+		filesLinksResource.setFiles(files);
+		
+		return filesLinksResource;
+
 	}
 	
 	
