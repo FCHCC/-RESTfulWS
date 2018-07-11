@@ -93,7 +93,6 @@ public class NotificationRest {
 		notificationLinksResource.setNotifications(notifications.getNotifications());
 		
 		return notificationLinksResource;
-
 	
 	}
 	
@@ -120,8 +119,7 @@ public class NotificationRest {
 			logger.error(e.getMessage());
 			return new ResponseEntity<>(null,null,HttpStatus.EXPECTATION_FAILED);
 		}
-		
-		
+			
 	}	
 	
 }

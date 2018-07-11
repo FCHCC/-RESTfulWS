@@ -51,7 +51,7 @@ public class IndexRest {
 		ServletUriComponentsBuilder builder = ServletUriComponentsBuilder.fromCurrentServletMapping();
 		List<Link> links = new ArrayList<Link>();
 		links.add(new Link(builder.path("/").build().toString(), "self"));
-		links.add(new Link(builder.path("/user/").build().toString(),"user"));
+		links.add(new Link(builder.path("").build().toString()+"user/","user"));
 		links.add(new Link(builder.path("").build().toString()+"directory/","directory"));
 		links.add(new Link(builder.path("").build().toString()+"file/","file"));
 		links.add(new Link(builder.path("").build().toString()+"notify/","notify"));
@@ -74,10 +74,10 @@ public class IndexRest {
 		ServletUriComponentsBuilder builder = ServletUriComponentsBuilder.fromCurrentServletMapping();
 		Resource resource = new Resource();
 		resource.addLink(new Link(builder.path("/").build().toString(), "self"));
-		resource.addLink(new Link(builder.path("/user/").build().toString(),"user"));
-		resource.addLink(new Link(builder.path("").build().toString()+"directory","directory"));
-		resource.addLink(new Link(builder.path("").build().toString()+"file","file"));
-		resource.addLink(new Link(builder.path("").build().toString()+"notify","notify"));
+		resource.addLink(new Link(builder.path("").build().toString()+"user/","user"));
+		resource.addLink(new Link(builder.path("").build().toString()+"directory/","directory"));
+		resource.addLink(new Link(builder.path("").build().toString()+"file/","file"));
+		resource.addLink(new Link(builder.path("").build().toString()+"notify/","notify"));
 		return resource;
 	}
 
