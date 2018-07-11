@@ -101,11 +101,13 @@ public class DirectoryRest {
 	public FileLinkListResource getFilesXML(@RequestParam(value="dir") String dir) {
 				
 		Path path = Paths.get(dir);
+		List<Path> paths = new ArrayList<Path>();
+		
 		if(!Files.exists(path)) {
 			throw new ResourceNotFoundException(path +"does not exist.");
 		}
 	
-		List<Path> paths = new ArrayList<Path>();
+		
 		
 		List<File> files = new ArrayList<File>();
 
@@ -121,6 +123,7 @@ public class DirectoryRest {
 		});		
 
 		FileLinkListResource filesLinksResource = new FileLinkListResource();
+		
 		List<Link> _links = new ArrayList<Link>();
 		
 		_links.add(new Link(ServletUriComponentsBuilder

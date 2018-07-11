@@ -34,7 +34,4 @@ public class FileLinkListResource extends Resource {
 		this.fileLinks = fileLinks;
 	}
 	
-	public void addFileLink(File link){
-		this.fileLinks.add(link);
-	}
 }
