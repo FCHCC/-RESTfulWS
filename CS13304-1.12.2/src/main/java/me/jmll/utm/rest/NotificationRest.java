@@ -1,10 +1,13 @@
 package me.jmll.utm.rest;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -17,13 +20,15 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import me.jmll.utm.model.Link;
+import me.jmll.utm.model.Notification;
 import me.jmll.utm.model.NotificationLinkListResource;
 import me.jmll.utm.model.OptionsDoc;
 import me.jmll.utm.service.NotificationService;
 
 @Controller
 public class NotificationRest {
-
+	
+	private static final Logger logger = LogManager.getLogger();
 	NotificationService notifications;
 	
 	@RequestMapping(value = "notify", method = RequestMethod.OPTIONS)
@@ -90,6 +95,21 @@ public class NotificationRest {
 		return notificationLinksResource;
 
 	
+	}
+	
+	@RequestMapping(value ="notify",
+					method= RequestMethod.POST)
+	@ResponseBody
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<?> Notify(){
+		
+	
+		
+		try {
+				List<String> toAddress = Arrays.asList();
+		}catch{}
+		return null;
+		
 	}
 	
 	
