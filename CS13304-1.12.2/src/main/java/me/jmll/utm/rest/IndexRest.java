@@ -52,9 +52,9 @@ public class IndexRest {
 		List<Link> links = new ArrayList<Link>();
 		links.add(new Link(builder.path("/").build().toString(), "self"));
 		links.add(new Link(builder.path("/user/").build().toString(),"user"));
-		links.add(new Link(builder.path("/directory/").build().toString(),"directory"));
-		links.add(new Link(builder.path("/file/").build().toString(),"file"));
-		links.add(new Link(builder.path("/notify/").build().toString(),"notify"));
+		links.add(new Link(builder.path("").build().toString()+"directory/","directory"));
+		links.add(new Link(builder.path("").build().toString()+"file/","file"));
+		links.add(new Link(builder.path("").build().toString()+"notify/","notify"));
 		
 		Map<String, Object> response = new Hashtable<>(1);
 		response.put("_links", links);
@@ -75,9 +75,9 @@ public class IndexRest {
 		Resource resource = new Resource();
 		resource.addLink(new Link(builder.path("/").build().toString(), "self"));
 		resource.addLink(new Link(builder.path("/user/").build().toString(),"user"));
-		resource.addLink(new Link(builder.path("/directory/").build().toString(),"directory"));
-		resource.addLink(new Link(builder.path("/file/").build().toString(),"file"));
-		resource.addLink(new Link(builder.path("/notify/").build().toString(),"notify"));
+		resource.addLink(new Link(builder.path("").build().toString()+"directory","directory"));
+		resource.addLink(new Link(builder.path("").build().toString()+"file","file"));
+		resource.addLink(new Link(builder.path("").build().toString()+"notify","notify"));
 		return resource;
 	}
 
