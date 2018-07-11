@@ -66,7 +66,7 @@ public class NotificationRest {
 		
 		Map<String, Object> response = new Hashtable<>(2);
 		response.put("_links", _links);
-		response.put("data", notifications);
+		response.put("data", notifications.getNotifications());
 		return response;
 
 	}
@@ -122,11 +122,6 @@ public class NotificationRest {
 		}
 		
 		
-	}
-	
-	
-	
-	
-	
+	}	
 	
 }

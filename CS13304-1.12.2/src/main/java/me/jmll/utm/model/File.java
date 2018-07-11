@@ -12,6 +12,8 @@ public class File implements Serializable {
 	private long sizeBytes;
 	private Link _link;
 	
+	public File() {};
+	
 	public File(String name, String path, String fullPath, long sizeBytes, Link _link) {
 		this.name = name;
 		this.path= path;

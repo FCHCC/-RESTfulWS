@@ -82,7 +82,7 @@ public class DirectoryRest {
 				 .fromCurrentServletMapping().path("/")
 				 .build().toString(), "api"));
 				 _links.add(new Link(ServletUriComponentsBuilder
-				 .fromCurrentServletMapping().path("/directory")
+				 .fromCurrentServletMapping().path("/directory/")
 				 .build().toString(), "self"));
 				 
 				 Map<String, Object> response = new Hashtable<>(2);
@@ -128,7 +128,7 @@ public class DirectoryRest {
 		 .build().toString(), "api"));
 		
 		_links.add(new Link(ServletUriComponentsBuilder
-		 .fromCurrentServletMapping().path("/directory")
+		 .fromCurrentServletMapping().path("/directory/")
 		.build().toString(), "self"));
 		
 		filesLinksResource.setLinks(_links);
