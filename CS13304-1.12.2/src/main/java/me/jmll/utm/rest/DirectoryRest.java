@@ -101,12 +101,14 @@ public class DirectoryRest {
 	public FileLinkListResource getFilesXML(@RequestParam(value="dir") String dir) {
 				
 		Path path = Paths.get(dir);
-		List<Path> paths = new ArrayList<Path>();
+		
 		
 		if(!Files.exists(path)) {
 			throw new ResourceNotFoundException(dir +"does not exist.");
 		}
 			
+		List<Path> paths = new ArrayList<Path>();
+		
 		List<File> files = new ArrayList<File>();
 		
 		paths = fileService.walkDir(path, paths);
