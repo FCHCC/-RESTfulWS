@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import me.jmll.utm.form.NotificationForm;
 import me.jmll.utm.model.Link;
-import me.jmll.utm.model.Notification;
 import me.jmll.utm.model.NotificationLinkListResource;
 import me.jmll.utm.model.OptionsDoc;
 import me.jmll.utm.service.NotificationService;
@@ -101,14 +101,26 @@ public class NotificationRest {
 					method= RequestMethod.POST)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<?> Notify(){
-		
-	
+	public ResponseEntity<?> Notify(NotificationForm notification){
 		
 		try {
-				List<String> toAddress = Arrays.asList();
-		}catch{}
-		return null;
+				List<String> toAddress = Arrays.asList(notification.getToAddress().split(";"));
+				List<String> ccAddress = new ArrayList<>();
+				
+				if(notification.getCcAddress() != null) {
+					ccAddress = Arrays.asList(notification.getCcAddress().split(";"));
+				}
+				
+				notifications.notify(notification.getSubject(), notification.getMessage(), toAddress, ccAddress);
+				
+				return new ResponseEntity<>(null,null,HttpStatus.ACCEPTED);
+				
+		}catch(Exception e){
+			
+			logger.error(e.getMessage());
+			return new ResponseEntity<>(null,null,HttpStatus.EXPECTATION_FAILED);
+		}
+		
 		
 	}
 	
