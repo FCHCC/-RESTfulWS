@@ -35,7 +35,7 @@ public class FileRest {
 	@RequestMapping(value = "file", method = RequestMethod.OPTIONS)
 	public ResponseEntity<?> showOptions(){
 		HttpHeaders headers = new HttpHeaders();
-		headers.add("Allow", "OPTIONS,HEAD,GET,PUT,DELETE");
+		headers.add("Allow", "OPTIONS,GET,POST,DELETE");
 		
 		Map<HttpMethod,String> methods = new Hashtable<>(4);
 		methods.put(HttpMethod.DELETE,"Deletes specified file in parameter'path'");
