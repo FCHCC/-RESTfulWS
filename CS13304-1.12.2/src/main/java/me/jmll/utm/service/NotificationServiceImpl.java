@@ -11,10 +11,16 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StopWatch;
 
+import me.jmll.utm.model.Notification;
+import me.jmll.utm.repository.NotificationRepository;
+
 @Service
 public class NotificationServiceImpl implements NotificationService {
 	@Autowired
 	private MailSender mailSender;
+	
+	@Autowired
+	NotificationRepository notificationRepository;
 	
 	private static final Logger logger = LogManager.getLogger();
 	
@@ -51,6 +57,13 @@ public class NotificationServiceImpl implements NotificationService {
 		stopwatch.stop();
 		logger.info("{} took {} secs", threadName,
 				stopwatch.getTotalTimeSeconds());
+	}
+	
+	@Override
+	public List<Notification> getNotifications() {
+
+		return notificationRepository.getNotifications();
+
 	}
 
 }
