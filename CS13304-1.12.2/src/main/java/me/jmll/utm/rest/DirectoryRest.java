@@ -104,13 +104,13 @@ public class DirectoryRest {
 		List<Path> paths = new ArrayList<Path>();
 		
 		if(!Files.exists(path)) {
-			throw new ResourceNotFoundException(path +"does not exist.");
+			throw new ResourceNotFoundException(dir +"does not exist.");
 		}
-	
-		
-		
+			
 		List<File> files = new ArrayList<File>();
-
+		
+		paths = fileService.walkDir(path, paths);
+		
 		paths.forEach(file ->{
 			
 			files.add(new File(file.getFileName().toString(),
